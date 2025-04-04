@@ -15,12 +15,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/authors")
 public class AuthorController {
-
+    //store
     private final AuthorService authorService;
+    //inject from service
+    public AuthorController (AuthorService authorService) {
+        this.authorService = authorService;
+    }
 
-        public AuthorController (AuthorService authorService) {
-            this.authorService = authorService;
-        }
     // get all author
     @GetMapping
     public ResponseEntity<ApiResponse<List<Author>>> getAllAuthors() {
@@ -33,5 +34,16 @@ public class AuthorController {
                     .build();
             return ResponseEntity.ok(response);
     }
-
+    // create author
+    @PostMapping
+    public ResponseEntity<ApiResponse<Author>> addAuthor(@RequestBody AuthorRequest authorRequest) {
+            ApiResponse<Author> response = ApiResponse.<Author>builder()
+                    .message("Create author success!")
+                    .status(HttpStatus.OK)
+                    .success(true)
+                    .payload(authorService.addAuthor(authorRequest))
+                    .timestamp(LocalDateTime.now())
+                    .build();
+            return ResponseEntity.ok(response);
+    }
 }

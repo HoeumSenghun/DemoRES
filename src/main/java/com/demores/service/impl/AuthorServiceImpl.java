@@ -10,8 +10,9 @@ import java.util.List;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
+    //store
     private final AuthorRepository authorRepository;
-
+    //inject from Repo
     public AuthorServiceImpl(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
     }
@@ -20,5 +21,8 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepository.getAllAuthors();
     }
 
-
+    @Override
+    public Author addAuthor(AuthorRequest authorRequest) {
+        return authorRepository.addAuthor(authorRequest);
+    }
 }
