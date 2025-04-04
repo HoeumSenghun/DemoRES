@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class Author {
-    private Integer id;
-    private String name;
-    private String gender;
+    private Integer authorId;
+    private String authorName;
+    private String authorGender;
 }
