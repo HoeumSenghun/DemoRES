@@ -25,4 +25,11 @@ public interface AuthorRepository {
 """)
     @ResultMap("authorMapper")
     Author addAuthor(AuthorRequest authorRequest);
+
+    @Select("""
+    SELECT * FROM authors
+    WHERE author_id = #{authorId}
+""")
+    @ResultMap("authorMapper")
+    Author getAuthorById(Integer authorId);
 }

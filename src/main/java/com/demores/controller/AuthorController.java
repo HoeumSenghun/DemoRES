@@ -46,4 +46,16 @@ public class AuthorController {
                     .build();
             return ResponseEntity.ok(response);
     }
+    // get author by id
+    @GetMapping("/{author-id}")
+    public ResponseEntity<ApiResponse<Author>> getAuthorById(@PathVariable("author-id") Integer authorId) {
+        ApiResponse<Author> response = ApiResponse.<Author>builder()
+                .message("Get author success!")
+                .status(HttpStatus.OK)
+                .success(true)
+                .payload(authorService.getAuthorById(authorId))
+                .timestamp(LocalDateTime.now())
+                .build();
+        return ResponseEntity.ok(response);
+    }
 }

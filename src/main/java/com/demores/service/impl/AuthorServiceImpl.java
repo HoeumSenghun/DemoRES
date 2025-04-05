@@ -25,4 +25,9 @@ public class AuthorServiceImpl implements AuthorService {
     public Author addAuthor(AuthorRequest authorRequest) {
         return authorRepository.addAuthor(authorRequest);
     }
+
+    @Override
+    public Author getAuthorById(Integer authorId) {
+        return authorRepository.getAuthorById(authorId);
+    }
 }
