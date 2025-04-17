@@ -16,6 +16,7 @@ public class AuthorServiceImpl implements AuthorService {
     public AuthorServiceImpl(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
     }
+
     @Override
     public List<Author> getAllAuthors() {
         return authorRepository.getAllAuthors();
@@ -29,5 +30,10 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public Author getAuthorById(Integer authorId) {
         return authorRepository.getAuthorById(authorId);
+    }
+
+    @Override
+    public Author updateAuthor(Integer authorId, AuthorRequest authorRequest) {
+        return authorRepository.updateAuthor(authorId,authorRequest);
     }
 }

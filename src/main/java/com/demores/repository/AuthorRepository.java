@@ -33,5 +33,12 @@ public interface AuthorRepository {
     @ResultMap("authorMapper")
     Author getAuthorById(Integer authorId);
 
-
+    @Select("""
+    UPDATE authors
+    SET name=#{request.authorName}, gender=#{request.authorGender}
+    WHERE author_id=#{authorId}
+    RETURNING *
+""")
+    @ResultMap("authorMapper")
+    Author updateAuthor(@Param("authorId") Integer authorId,@Param("request") AuthorRequest authorRequest);
 }

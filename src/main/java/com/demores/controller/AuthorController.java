@@ -58,4 +58,16 @@ public class AuthorController {
                 .build();
         return ResponseEntity.ok(response);
     }
+    // update author
+    @PutMapping("/{author-id}")
+    public ResponseEntity<ApiResponse<Author>> updateAuthor(@PathVariable("author-id")Integer authorId,@RequestBody AuthorRequest authorRequest) {
+        ApiResponse<Author> response = ApiResponse.<Author>builder()
+                .message("Update author success!")
+                .status(HttpStatus.OK)
+                .success(true)
+                .payload(authorService.updateAuthor(authorId,authorRequest))
+                .timestamp(LocalDateTime.now())
+                .build();
+        return ResponseEntity.ok(response);
+    }
 }

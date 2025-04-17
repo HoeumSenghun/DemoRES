@@ -9,4 +9,5 @@ public interface AuthorService {
     List<Author> getAllAuthors();
     Author addAuthor(AuthorRequest authorRequest);
     Author getAuthorById(Integer authorId);
+    Author updateAuthor(Integer authorId, AuthorRequest authorRequest);
 }
