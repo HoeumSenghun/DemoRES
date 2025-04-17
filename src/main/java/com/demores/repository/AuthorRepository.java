@@ -32,4 +32,6 @@ public interface AuthorRepository {
 """)
     @ResultMap("authorMapper")
     Author getAuthorById(Integer authorId);
+
+
 }
