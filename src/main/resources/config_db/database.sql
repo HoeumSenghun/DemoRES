@@ -3,7 +3,7 @@ CREATE DATABASE demores_db;
 
 CREATE TABLE authors
 (
-    author_id serialPRIMARY KEY,
+    author_id serial PRIMARY KEY,
     name varchar(100) NOT NULL,
     gender varchar(10)  NOT NULL
 );
