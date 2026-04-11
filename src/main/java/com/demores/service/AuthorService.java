@@ -10,4 +10,6 @@ public interface AuthorService {
     Author addAuthor(AuthorRequest authorRequest);
     Author getAuthorById(Integer authorId);
     Author updateAuthor(Integer authorId, AuthorRequest authorRequest);
+
+    Author deleteAuthor(Integer authorId);
 }

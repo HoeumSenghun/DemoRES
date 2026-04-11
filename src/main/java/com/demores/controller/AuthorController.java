@@ -70,4 +70,17 @@ public class AuthorController {
                 .build();
         return ResponseEntity.ok(response);
     }
+
+    // delete author
+    @DeleteMapping("/{author-id}")
+    public ResponseEntity<ApiResponse<Author>> deleteAuthor(@PathVariable("author-id") Integer authorId) {
+        ApiResponse<Author> response = ApiResponse.<Author>builder()
+                .message("Delete author success!")
+                .status(HttpStatus.OK)
+                .success(true)
+                .payload(authorService.deleteAuthor(authorId))
+                .timestamp(LocalDateTime.now())
+                .build();
+        return ResponseEntity.ok(response);
+    }
 }

@@ -41,4 +41,12 @@ public interface AuthorRepository {
 """)
     @ResultMap("authorMapper")
     Author updateAuthor(@Param("authorId") Integer authorId,@Param("request") AuthorRequest authorRequest);
+
+    @Select("""
+    DELETE FROM authors
+    WHERE author_id = #{authorId}
+    RETURNING *
+""")
+    @ResultMap("authorMapper")
+    Author deleteAuthor(Integer authorId);
 }

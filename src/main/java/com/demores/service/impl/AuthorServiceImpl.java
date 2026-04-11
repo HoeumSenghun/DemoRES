@@ -36,4 +36,9 @@ public class AuthorServiceImpl implements AuthorService {
     public Author updateAuthor(Integer authorId, AuthorRequest authorRequest) {
         return authorRepository.updateAuthor(authorId,authorRequest);
     }
+
+    @Override
+    public Author deleteAuthor(Integer authorId) {
+        return authorRepository.deleteAuthor(authorId);
+    }
 }
