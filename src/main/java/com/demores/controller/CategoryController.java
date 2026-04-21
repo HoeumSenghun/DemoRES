@@ -6,6 +6,8 @@ import com.demores.model.entity.Book;
 import com.demores.model.entity.Category;
 import com.demores.service.BookCategoryService;
 import com.demores.service.CategoryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/categories")
+@Tag(name = "Categories", description = "Category management endpoints")
 public class CategoryController {
     private final CategoryService categoryService;
     private final BookCategoryService bookCategoryService;
@@ -25,18 +28,22 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<Category>>> getAllCategories() {
+    @Operation(summary = "Get all categories")
+    public ResponseEntity<ApiResponse<List<Category>>> getAllCategories(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
         ApiResponse<List<Category>> response = ApiResponse.<List<Category>>builder()
                 .message("Get all category success!")
                 .status(HttpStatus.OK)
                 .success(true)
-                .payload(categoryService.getAllCategories())
+                .payload(categoryService.getAllCategories(page, size))
                 .timestamp(LocalDateTime.now())
                 .build();
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
+    @Operation(summary = "Create category")
     public ResponseEntity<ApiResponse<Category>> addCategory(@RequestBody CategoryRequest categoryRequest) {
         ApiResponse<Category> response = ApiResponse.<Category>builder()
                 .message("Create category success!")
@@ -49,6 +56,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{category-id}")
+    @Operation(summary = "Get category by id")
     public ResponseEntity<ApiResponse<Category>> getCategoryById(@PathVariable("category-id") Integer categoryId) {
         ApiResponse<Category> response = ApiResponse.<Category>builder()
                 .message("Get category success!")
@@ -61,6 +69,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{category-id}")
+    @Operation(summary = "Update category by id")
     public ResponseEntity<ApiResponse<Category>> updateCategory(
             @PathVariable("category-id") Integer categoryId,
             @RequestBody CategoryRequest categoryRequest) {
@@ -75,6 +84,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{category-id}")
+    @Operation(summary = "Delete category by id")
     public ResponseEntity<ApiResponse<Category>> deleteCategory(@PathVariable("category-id") Integer categoryId) {
         ApiResponse<Category> response = ApiResponse.<Category>builder()
                 .message("Delete category success!")
@@ -88,6 +98,7 @@ public class CategoryController {
 
     // read-only join: books of a category
     @GetMapping("/{category-id}/books")
+    @Operation(summary = "Get books by category id")
     public ResponseEntity<ApiResponse<List<Book>>> getBooksByCategoryId(@PathVariable("category-id") Integer categoryId) {
         ApiResponse<List<Book>> response = ApiResponse.<List<Book>>builder()
                 .message("Get books by category success!")

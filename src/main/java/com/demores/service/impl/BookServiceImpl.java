@@ -16,9 +16,13 @@ public class BookServiceImpl implements BookService {
         this.bookRepository = bookRepository;
     }
 
+
     @Override
-    public List<Book> getAllBooks() {
-        return bookRepository.getAllBooks();
+    public List<Book> getAllBooks(int page, int size) {
+        int safePage = Math.max(page, 0);
+        int safeSize = Math.min(Math.max(size, 1), 100);
+        int offset = safePage * safeSize;
+        return bookRepository.getAllBooksPaged(safeSize, offset);
     }
 
     @Override

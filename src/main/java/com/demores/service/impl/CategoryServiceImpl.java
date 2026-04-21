@@ -16,9 +16,13 @@ public class CategoryServiceImpl implements CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
+
     @Override
-    public List<Category> getAllCategories() {
-        return categoryRepository.getAllCategories();
+    public List<Category> getAllCategories(int page, int size) {
+        int safePage = Math.max(page, 0);
+        int safeSize = Math.min(Math.max(size, 1), 100);
+        int offset = safePage * safeSize;
+        return categoryRepository.getAllCategoriesPaged(safeSize, offset);
     }
 
     @Override

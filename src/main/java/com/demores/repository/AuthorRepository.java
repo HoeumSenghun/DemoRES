@@ -19,6 +19,14 @@ public interface AuthorRepository {
     List<Author> getAllAuthors();
 
     @Select("""
+    SELECT * FROM authors
+    ORDER BY author_id
+    LIMIT #{limit} OFFSET #{offset}
+""")
+    @ResultMap("authorMapper")
+    List<Author> getAllAuthorsPaged(@Param("limit") int limit, @Param("offset") int offset);
+
+    @Select("""
     INSERT INTO authors(name, gender) 
     VALUES ( #{authorName}, #{authorGender})
     RETURNING *

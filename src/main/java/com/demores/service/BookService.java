@@ -6,7 +6,7 @@ import com.demores.model.entity.Book;
 import java.util.List;
 
 public interface BookService {
-    List<Book> getAllBooks();
+    List<Book> getAllBooks(int page, int size);
     Book addBook(BookRequest bookRequest);
     Book getBookById(Integer bookId);
     Book updateBook(Integer bookId, BookRequest bookRequest);

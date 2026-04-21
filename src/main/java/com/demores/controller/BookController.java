@@ -7,6 +7,8 @@ import com.demores.model.entity.BookCategory;
 import com.demores.model.entity.Category;
 import com.demores.service.BookCategoryService;
 import com.demores.service.BookService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/books")
+@Tag(name = "Books", description = "Book management endpoints")
 public class BookController {
     private final BookService bookService;
     private final BookCategoryService bookCategoryService;
@@ -26,18 +29,22 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<Book>>> getAllBooks() {
+    @Operation(summary = "Get all books")
+    public ResponseEntity<ApiResponse<List<Book>>> getAllBooks(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
         ApiResponse<List<Book>> response = ApiResponse.<List<Book>>builder()
                 .message("Get all book success!")
                 .status(HttpStatus.OK)
                 .success(true)
-                .payload(bookService.getAllBooks())
+                .payload(bookService.getAllBooks(page, size))
                 .timestamp(LocalDateTime.now())
                 .build();
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
+    @Operation(summary = "Create book")
     public ResponseEntity<ApiResponse<Book>> addBook(@RequestBody BookRequest bookRequest) {
         ApiResponse<Book> response = ApiResponse.<Book>builder()
                 .message("Create book success!")
@@ -50,6 +57,7 @@ public class BookController {
     }
 
     @GetMapping("/{book-id}")
+    @Operation(summary = "Get book by id")
     public ResponseEntity<ApiResponse<Book>> getBookById(@PathVariable("book-id") Integer bookId) {
         ApiResponse<Book> response = ApiResponse.<Book>builder()
                 .message("Get book success!")
@@ -62,6 +70,7 @@ public class BookController {
     }
 
     @PutMapping("/{book-id}")
+    @Operation(summary = "Update book by id")
     public ResponseEntity<ApiResponse<Book>> updateBook(
             @PathVariable("book-id") Integer bookId,
             @RequestBody BookRequest bookRequest) {
@@ -76,6 +85,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{book-id}")
+    @Operation(summary = "Delete book by id")
     public ResponseEntity<ApiResponse<Book>> deleteBook(@PathVariable("book-id") Integer bookId) {
         ApiResponse<Book> response = ApiResponse.<Book>builder()
                 .message("Delete book success!")
@@ -89,6 +99,7 @@ public class BookController {
 
     // assign category to book (book_category)
     @PostMapping("/{book-id}/categories/{category-id}")
+    @Operation(summary = "Assign category to book")
     public ResponseEntity<ApiResponse<BookCategory>> assignCategoryToBook(
             @PathVariable("book-id") Integer bookId,
             @PathVariable("category-id") Integer categoryId) {
@@ -104,6 +115,7 @@ public class BookController {
 
     // unassign category from book (book_category)
     @DeleteMapping("/{book-id}/categories/{category-id}")
+    @Operation(summary = "Unassign category from book")
     public ResponseEntity<ApiResponse<BookCategory>> unassignCategoryFromBook(
             @PathVariable("book-id") Integer bookId,
             @PathVariable("category-id") Integer categoryId) {
@@ -119,6 +131,7 @@ public class BookController {
 
     // read-only join: categories of a book
     @GetMapping("/{book-id}/categories")
+    @Operation(summary = "Get categories by book id")
     public ResponseEntity<ApiResponse<List<Category>>> getCategoriesByBookId(@PathVariable("book-id") Integer bookId) {
         ApiResponse<List<Category>> response = ApiResponse.<List<Category>>builder()
                 .message("Get categories by book success!")

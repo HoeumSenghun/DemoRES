@@ -17,9 +17,13 @@ public class AuthorServiceImpl implements AuthorService {
         this.authorRepository = authorRepository;
     }
 
+
     @Override
-    public List<Author> getAllAuthors() {
-        return authorRepository.getAllAuthors();
+    public List<Author> getAllAuthors(int page, int size) {
+        int safePage = Math.max(page, 0);
+        int safeSize = Math.min(Math.max(size, 1), 100);
+        int offset = safePage * safeSize;
+        return authorRepository.getAllAuthorsPaged(safeSize, offset);
     }
 
     @Override

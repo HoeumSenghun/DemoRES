@@ -20,6 +20,14 @@ public interface BookRepository {
     List<Book> getAllBooks();
 
     @Select("""
+    SELECT * FROM books
+    ORDER BY book_id
+    LIMIT #{limit} OFFSET #{offset}
+""")
+    @ResultMap("bookMapper")
+    List<Book> getAllBooksPaged(@Param("limit") int limit, @Param("offset") int offset);
+
+    @Select("""
     INSERT INTO books(name, published_date, author_id)
     VALUES (#{bookName}, #{publishDate}, #{authorId})
     RETURNING *

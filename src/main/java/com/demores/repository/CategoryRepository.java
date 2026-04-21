@@ -18,6 +18,14 @@ public interface CategoryRepository {
     List<Category> getAllCategories();
 
     @Select("""
+    SELECT * FROM categories
+    ORDER BY category_id
+    LIMIT #{limit} OFFSET #{offset}
+""")
+    @ResultMap("categoryMapper")
+    List<Category> getAllCategoriesPaged(@Param("limit") int limit, @Param("offset") int offset);
+
+    @Select("""
     INSERT INTO categories(name)
     VALUES (#{categoryName})
     RETURNING *
